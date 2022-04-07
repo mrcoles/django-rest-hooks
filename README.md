@@ -180,7 +180,7 @@ class Book(models.Model):
 ```
 
 For the simplest experience, you'll just piggyback off the standard ORM which will
-handle the basic `created`, `updated` and `deleted` signals & events:
+handle the basic `created`, `updated` and `deleted` signals & events (disabled by setting `HOOK_CRUD_SIGNALS = False`):
 
 ```python
 >>> from django.contrib.auth.models import User

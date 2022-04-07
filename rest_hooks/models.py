@@ -32,6 +32,8 @@ if HOOK_EVENTS is None:
 
 _HOOK_EVENT_ACTIONS_CONFIG = None
 
+HOOK_CRUD_SIGNALS = getattr(settings, 'HOOK_CRUD_SIGNALS', True)
+
 
 def get_event_actions_config():
     global _HOOK_EVENT_ACTIONS_CONFIG
@@ -187,6 +189,9 @@ def model_saved(sender, instance,
     """
     Automatically triggers "created" and "updated" actions.
     """
+    if not HOOK_CRUD_SIGNALS:
+        return
+
     model_label = get_model_label(instance)
     action = 'created' if created else 'updated'
     distill_model_event(instance, model_label, action)
@@ -199,6 +204,9 @@ def model_deleted(sender, instance,
     """
     Automatically triggers "deleted" actions.
     """
+    if not HOOK_CRUD_SIGNALS:
+        return
+
     model_label = get_model_label(instance)
     distill_model_event(instance, model_label, 'deleted')
 
